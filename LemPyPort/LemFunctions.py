@@ -54,8 +54,6 @@ def all_normalizations(adverb_norm,number_norm,superlative_norm,augmentative_nor
 	global break_on_hyphen
 	global break_on_underscore
 	flags = run_modules
-	if(type(tag)=="NoneType"):
-		print(token)
 	if(len(token)==0 or len(tag)==0):
 		return token
 	lemma = token.lower()
@@ -96,8 +94,9 @@ def all_normalizations(adverb_norm,number_norm,superlative_norm,augmentative_nor
 
 	if(flags[0]=="1" and (tag in adverb_tags.split("|"))):
 		#check dictionary
-		if(result[-1]=="-"):
-			result=result[:-1]
+		if(len(result)>0):
+			if(result[-1]=="-"):
+				result=result[:-1]
 		lema_dict = novo_dict.retrive_lemas(result,lex_tag)
 		if(lema_dict!=[] and (lex_tag not in dict_exclusions.split("|"))):
 			res = ranking.retrieve_top_word(lema_dict)
@@ -109,8 +108,9 @@ def all_normalizations(adverb_norm,number_norm,superlative_norm,augmentative_nor
 			result=result_adverb
 	if(flags[1]=="1" and (tag in number_tags.split("|")) ):
 		#check dictionary
-		if(result[-1]=="-"):
-			result=result[:-1]
+		if(len(result)>0):
+			if(result[-1]=="-"):
+				result=result[:-1]
 		lema_dict = novo_dict.retrive_lemas(result,lex_tag)
 
 		if(lema_dict!=[] and (lex_tag not in dict_exclusions.split("|"))):
@@ -124,8 +124,9 @@ def all_normalizations(adverb_norm,number_norm,superlative_norm,augmentative_nor
 
 	if(flags[2]=="1" and (tag in superlative_tags.split("|")) ):
 		#check dictionary
-		if(result[-1]=="-"):
-			result=result[:-1]
+		if(len(result)>0):
+			if(result[-1]=="-"):
+				result=result[:-1]
 		lema_dict = novo_dict.retrive_lemas(result,lex_tag)
 		if(lema_dict!=[] and (lex_tag not in dict_exclusions.split("|"))):
 			res = ranking.retrieve_top_word(lema_dict)
@@ -137,8 +138,9 @@ def all_normalizations(adverb_norm,number_norm,superlative_norm,augmentative_nor
 			result=result_superlative
 	if(flags[3]=="1" and (tag in augmentative_tags.split("|")) ):
 		#check dictionary
-		if(result[-1]=="-"):
-			result=result[:-1]
+		if(len(result)>0):
+			if(result[-1]=="-"):
+				result=result[:-1]
 		lema_dict = novo_dict.retrive_lemas(result,lex_tag)
 		if(lema_dict!=[] and (lex_tag not in dict_exclusions.split("|"))):
 			res = ranking.retrieve_top_word(lema_dict)
@@ -150,8 +152,9 @@ def all_normalizations(adverb_norm,number_norm,superlative_norm,augmentative_nor
 			result=result_augmentative
 	if(flags[4]=="1" and (tag in diminutive_tags.split("|")) ):
 		#check dictionary
-		if(result[-1]=="-"):
-			result=result[:-1]
+		if(len(result)>0):
+			if(result[-1]=="-"):
+				result=result[:-1]
 		lema_dict = novo_dict.retrive_lemas(result,lex_tag)
 		if(lema_dict!=[] and (lex_tag not in dict_exclusions.split("|"))):
 			res = ranking.retrieve_top_word(lema_dict)
@@ -163,8 +166,9 @@ def all_normalizations(adverb_norm,number_norm,superlative_norm,augmentative_nor
 			result=result_diminutive
 	if(flags[5]=="1" and (tag in gender_tags.split("|"))):
 		#check dictionary
-		if(result[-1]=="-"):
-			result=result[:-1]
+		if(len(result)>0):
+			if(result[-1]=="-"):
+				result=result[:-1]
 		#check dictionary
 		lema_dict = novo_dict.retrive_lemas(result,lex_tag)
 		if(lema_dict!=[] and (lex_tag not in dict_exclusions.split("|"))):
@@ -177,8 +181,9 @@ def all_normalizations(adverb_norm,number_norm,superlative_norm,augmentative_nor
 			result=result_gender
 	if(flags[6]=="1" and (tag in gender_name_tags.split("|")) ):
 		#check dictionary
-		if(result[-1]=="-"):
-			result=result[:-1]
+		if(len(result)>0):
+			if(result[-1]=="-"):
+				result=result[:-1]
 		lema_dict = novo_dict.retrive_lemas(result,lex_tag)
 		if(lema_dict!=[] and (lex_tag not in dict_exclusions.split("|"))):
 			res = ranking.retrieve_top_word(lema_dict)
@@ -190,8 +195,9 @@ def all_normalizations(adverb_norm,number_norm,superlative_norm,augmentative_nor
 			result=result_gender_name
 	if(flags[7]=="1" and (tag in verb_tags.split("|"))):
 		#check dictionary
-		if(result[-1]=="-"):
-			result=result[:-1]
+		if(len(result)>0):
+			if(result[-1]=="-"):
+				result=result[:-1]
 		lema_dict = novo_dict.retrive_lemas(result,lex_tag)
 		if(lema_dict!=[] and (lex_tag not in dict_exclusions.split("|"))):
 			res = ranking.retrieve_top_word(lema_dict)
@@ -381,7 +387,7 @@ def load_lematizador():
 	
 	verb_norm.compile_rules()
 
-	print("Lemmatizer load completed")
+	#print("Lemmatizer load completed")
 	
 
 	ranking = word_ranking()
@@ -393,7 +399,7 @@ def load_lematizador():
 	novo_dict.load(custom_dictionary_path)
 	#ranking.load("Resources/acdc/formas.total.txt")
 
-	print("Dictionary load completed")
+	#print("Dictionary load completed")
 
 	return adverb_norm,number_norm,superlative_norm,augmentative_norm,diminutive_norm,gender_norm,gender_name_norm,verb_norm,ranking,novo_dict
 
@@ -411,10 +417,9 @@ def tags_classes():
 
 def nlpyport_lematizer(token,tag,LemPort_config_file):
 	get_paths_lematizador(LemPort_config_file)
-	print(adverb_path)
 	adverb_norm,number_norm,superlative_norm,augmentative_norm,diminutive_norm,gender_norm,gender_name_norm,verb_norm,ranking,novo_dict  = load_lematizador()
 	valor = []
 	for i in range(len(token)):
-		res = all_normalizations(adverb_norm,number_norm,superlative_norm,augmentative_norm,diminutive_norm,gender_norm,gender_name_norm,verb_norm,token[i],tag[i],ranking,novo_dict)
+		res = all_normalizations(adverb_norm,number_norm,superlative_norm,augmentative_norm,diminutive_norm,gender_norm,gender_name_norm,verb_norm,token[i].lower(),tag[i].lower(),ranking,novo_dict)
 		valor.append(res)
 	return valor

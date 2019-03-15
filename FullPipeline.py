@@ -39,7 +39,6 @@ def load_config(config_file="config/global.properties"):
 					TagPort_config_file = line.split("=")[1].strip("\n")
 				elif(line.split("=")[0]=="LemPort_config_file"):
 					LemPort_config_file = line.split("=")[1].strip("\n")
-					print(LemPort_config_file)
 # """word tokenizer"""
 def tokenize(fileinput):
 	return nlpyport_tokenizer(fileinput,TokPort_config_file)
@@ -68,7 +67,7 @@ def load_manual(file):
 			tags.append(res[1].split('\n')[0])
 	return tokens,tags
 
-def write_lemmas_only_text(lem):
+def write_lemmas_only_text(lem,file="testes.txt"):
 	for elem in lem:
 		with open("testes.txt",'a') as f:
 			if(elem == "#"):
@@ -76,7 +75,7 @@ def write_lemmas_only_text(lem):
 			else:
 				f.write(str(elem)+" ")
 
-def print_simple_connl(tokens,tags,lems,file=""):
+def write_simple_connl(tokens,tags,lems,file=""):
 	linhas = 0
 	if(file != ""):
 		for index in range(len(tokens)):
@@ -99,12 +98,24 @@ def print_simple_connl(tokens,tags,lems,file=""):
 if __name__ == "__main__":
 	start_time = time.time()
 	load_config()
+	#############
+	#Tokenize
+	#############
+
+	#tokens = tokenize("TokPyPort/EntradaCadeiaTotal.txt")
 	
-	tokens = tokenize("TokPyPort/EntradaCadeiaTotal.txt")
-	tags,result_tags = tag(tokens)
-	
-	#tokens,tags = load_manual("TokPyPort/conll_tagged_text_all.txt")
+	#############
+	#Pos
+	#############
+	#tags,result_tags = tag(tokens)
+	tokens,tags = load_manual("TokPyPort/testesReduzidos.txt")
+
+
+	#############
+	#Lemmatizer
+	#############
 	lem = lematizador_normal(tokens,tags)
-	print(print_simple_connl(tokens,tags,lem,"ResultConnl.txt"))
+	#write_lemmas_only_text(lem)
+	write_simple_connl(tokens,tags,lem,"ResultConnl.txt")
 	print("--- %s Seconds ---" % (time.time() - start_time))
 
