@@ -102,20 +102,26 @@ if __name__ == "__main__":
 	#Tokenize
 	#############
 
-	#tokens = tokenize("TokPyPort/EntradaCadeiaTotal.txt")
+	tokens = tokenize("TokPyPort/EntradaCadeiaTotal.txt")
 	
 	#############
 	#Pos
 	#############
-	#tags,result_tags = tag(tokens)
-	tokens,tags = load_manual("TokPyPort/testesReduzidos.txt")
+	tags,result_tags = tag(tokens)
+	
+	#### Pre load a file with tokens and tags
+	#tokens,tags = load_manual("TokPyPort/testesReduzidos.txt")
 
 
 	#############
 	#Lemmatizer
 	#############
 	lem = lematizador_normal(tokens,tags)
-	#write_lemmas_only_text(lem)
-	write_simple_connl(tokens,tags,lem,"ResultConnl.txt")
+	#Re-write the file with the lemas
+	write_lemmas_only_text(lem,"Results.txt")
+	#Write all in connl format
+
+	#write_simple_connl(tokens,tags,lem,"ResultConnl.txt")
+	
 	print("--- %s Seconds ---" % (time.time() - start_time))
 
