@@ -68,7 +68,7 @@ def load_manual(file):
 
 def write_lemmas_only_text(lem,file="testes.txt"):
 	for elem in lem:
-		with open("testes.txt",'a') as f:
+		with open(file,'a') as f:
 			if(elem == "#"):
 				f.write('\n')
 			else:
@@ -84,7 +84,7 @@ def write_simple_connl(tokens,tags,lems,file=""):
 					linhas = 0
 				else:
 					linhas += 1
-					f.write(str(tokens[index] + " " + str(lems[index]))+"\n")
+					f.write(str(linhas) + ", " + str(tokens[index] + ", " +str(lems[index] + ", " + str(tags[index]))+"\n"))
 	else:
 		for index in range(len(tokens)):
 			if(tokens[index] == "#"):
@@ -92,7 +92,7 @@ def write_simple_connl(tokens,tags,lems,file=""):
 				linhas = 0
 			else:
 				linhas += 1
-				print(str(tokens[index] + " " + str(lems[index])))
+				print(str(linhas) + ", " + str(tokens[index] + ", " +str(lems[index] + ", " + str(tags[index]))))
 
 if __name__ == "__main__":
 	start_time = time.time()
