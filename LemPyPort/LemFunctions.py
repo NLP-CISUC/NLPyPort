@@ -8,7 +8,6 @@ from nltk.corpus import treebank
 from nltk.metrics import accuracy
 from nltk.corpus import machado
 from operator import itemgetter
-from memory_profiler import profile
 import pickle
 import nltk
 import time

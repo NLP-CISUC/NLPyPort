@@ -1,7 +1,5 @@
 import xmltodict
 import re
-import exrex
-from memory_profiler import profile
 
 class verb_normalizer:
 	def __init__(self):

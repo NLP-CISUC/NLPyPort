@@ -99,7 +99,7 @@ def nlpyport_tokenizer(fileinput,TokPort_config_file):
 	#Get tokens from input file, one by line
 	text = get_input_from_file(fileinput)
 
-	#Do thea actual tokenixation
+	#Do thea actual tokenization
 	tokens = nltk.word_tokenize(text)
 
 	tokens_after_contractions = replace_contrations(contractions_path,tokens)

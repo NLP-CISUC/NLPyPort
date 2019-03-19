@@ -10,7 +10,6 @@ from nltk.corpus import machado
 import pickle
 import nltk
 import time
-import spacy
 import xmltodict
 from LemPyPort.LemFunctions import *
 from LemPyPort.dictionary import *
@@ -85,7 +84,7 @@ def write_simple_connl(tokens,tags,lems,file=""):
 					linhas = 0
 				else:
 					linhas += 1
-					f.write(str(linhas) + ", " + str(tokens[index] + ", " +str(lems[index] + ", " + str(tags[index]))+"\n"))
+					f.write(str(tokens[index] + " " + str(lems[index]))+"\n")
 	else:
 		for index in range(len(tokens)):
 			if(tokens[index] == "#"):
@@ -93,7 +92,7 @@ def write_simple_connl(tokens,tags,lems,file=""):
 				linhas = 0
 			else:
 				linhas += 1
-				print(str(linhas) + ", " + str(tokens[index] + ", " +str(lems[index] + ", " + str(tags[index]))))
+				print(str(tokens[index] + " " + str(lems[index])))
 
 if __name__ == "__main__":
 	start_time = time.time()
@@ -102,15 +101,15 @@ if __name__ == "__main__":
 	#Tokenize
 	#############
 
-	tokens = tokenize("TokPyPort/EntradaCadeiaTotal.txt")
+	#tokens = tokenize("TokPyPort/EntradaCadeiaTotal.txt")
 	
 	#############
 	#Pos
 	#############
-	tags,result_tags = tag(tokens)
+	#tags,result_tags = tag(tokens)
 	
 	#### Pre load a file with tokens and tags
-	#tokens,tags = load_manual("TokPyPort/testesReduzidos.txt")
+	tokens,tags = load_manual("TokPyPort/conll_tagged_text_all.txt")
 
 
 	#############
@@ -118,10 +117,10 @@ if __name__ == "__main__":
 	#############
 	lem = lematizador_normal(tokens,tags)
 	#Re-write the file with the lemas
-	write_lemmas_only_text(lem,"Results.txt")
+	#write_lemmas_only_text(lem,"Results.txt")
 	#Write all in connl format
 
-	#write_simple_connl(tokens,tags,lem,"ResultConnl.txt")
+	write_simple_connl(tokens,tags,lem,"ResultConnl.txt")
 	
 	print("--- %s Seconds ---" % (time.time() - start_time))
 
