@@ -115,6 +115,10 @@ def join_data(tokens,tags,lem):
 	return data
 
 def full_pipe(input_file,out_file="Resut.txt"):
+
+	#load the pipeline configurations
+	load_config()
+	
 	#############
 	#Tokenize
 	#############
@@ -148,8 +152,6 @@ def full_pipe(input_file,out_file="Resut.txt"):
 if __name__ == "__main__":
 	input_file = "SampleInput/Sample.txt"
 	out_file = "SampleOut.txt"
-	#load the pipeline configurations
-	load_config()
 
 	#run the full pipeline
 	full_pipe(input_file,out_file)
