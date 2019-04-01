@@ -10,7 +10,6 @@ from nltk.corpus import machado
 import pickle
 import nltk
 import time
-import spacy
 import xmltodict
 
 def load_tag_configurations(config_file):

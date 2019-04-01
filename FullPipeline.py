@@ -114,7 +114,7 @@ def join_data(tokens,tags,lem):
 		data.append(dados)
 	return data
 
-def full_pipe(input_file,out_file="Resut.txt"):
+def full_pipe(input_file,out_file=""):
 
 	#load the pipeline configurations
 	load_config()
@@ -136,17 +136,20 @@ def full_pipe(input_file,out_file="Resut.txt"):
 	#############
 	#Lemmatizer
 	#############
-	lem = lematizador_normal(tokens,tags)
+	lemas = lematizador_normal(tokens,tags)
 	#Re-write the file with the lemas
-	#write_lemmas_only_text(lem,"File.txt")
+	#write_lemmas_only_text(lemas,"File.txt")
 
 	#############
 	#Entity recognition
 	#############
-	joined_data = join_data(tokens,tags,lem)
+	joined_data = join_data(tokens,tags,lemas)
 	trained_model = "CRF/trainedModels/harem.pickle"
-	ents = run_crf(joined_data,trained_model)
-	write_simple_connl(tokens,tags,lem,ents,out_file)
+	entidades = run_crf(joined_data,trained_model)
+
+	write_simple_connl(tokens,tags,lemas,entidades,out_file)
+
+	return tokens,tags,lemas,entidades
 
 
 if __name__ == "__main__":
@@ -154,4 +157,4 @@ if __name__ == "__main__":
 	out_file = "SampleOut.txt"
 
 	#run the full pipeline
-	full_pipe(input_file,out_file)
+	tokens,tags,lemas,entidades = full_pipe(input_file,out_file)
