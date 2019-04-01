@@ -21,7 +21,7 @@ def get_input_from_file(fileinput):
 	text = " "
 	with open(fileinput,'r') as f:
 		for line in f:
-			text += line + " " + "# "
+			text += line + " #"
 	return text
 
 def replace_contrations(contractions_path,tokens):
@@ -82,6 +82,8 @@ def replace_clitics(clitics_path,tokens):
 							tokens_after_clitics.append(withslash[0]+"-")
 				if(encontrou==0):
 					tokens_after_clitics.append(token2)
+			else:
+				tokens_after_clitics.append(tokens)
 	return tokens_after_clitics	
 
 def nlpyport_tokenizer(fileinput,TokPort_config_file):
@@ -101,14 +103,18 @@ def nlpyport_tokenizer(fileinput,TokPort_config_file):
 
 	#Do thea actual tokenization
 	tokens = nltk.word_tokenize(text)
-
+	for i in range(len(tokens)):
+		if(tokens[i])=="#":
+			tokens[i] = "\n"
 	tokens_after_contractions = replace_contrations(contractions_path,tokens)
 
 	#Check if tokens contain clitics
 	#If so, change them to the most extended form
 	tokens_after_clitics =replace_clitics(clitics_path,tokens_after_contractions)
-
-	return tokens_after_clitics
+	final_tokens =[]
+	for tok in tokens_after_clitics:
+		final_tokens.append(tok.lower())
+	return final_tokens
 
 '''
 if __name__ == '__main__':

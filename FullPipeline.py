@@ -15,6 +15,7 @@ from LemPyPort.LemFunctions import *
 from LemPyPort.dictionary import *
 from TokPyPort.Tokenizer import *
 from TagPyPort.Tagger import *
+from CRF.CRF_Teste import *
 
 
 global_porperties_file = "config/global.properties"
@@ -45,7 +46,6 @@ def tokenize(fileinput):
 def tag(tokens):
 	return nlpyport_pos(tokens,TagPort_config_file)
 
-
 def lematizador_normal(tokens,tags):
 	global LemPort_config_file
 	mesmas = 0
@@ -69,58 +69,87 @@ def load_manual(file):
 def write_lemmas_only_text(lem,file="testes.txt"):
 	for elem in lem:
 		with open(file,'a') as f:
-			if(elem == "#"):
+			if(elem == '\n'):
 				f.write('\n')
 			else:
 				f.write(str(elem)+" ")
 
-def write_simple_connl(tokens,tags,lems,file=""):
+def write_simple_connl(tokens,tags,lems,ents,file=""):
 	linhas = 0
 	if(file != ""):
 		for index in range(len(tokens)):
 			with open(file,'a') as f:
-				if(tokens[index] == "#"):
+				if(tokens[index] == "\n"):
 					f.write("\n")
 					linhas = 0
 				else:
 					linhas += 1
-					f.write(str(linhas) + ", " + str(tokens[index] + ", " +str(lems[index] + ", " + str(tags[index]))+"\n"))
+					f.write(str(linhas) + ", " + str(tokens[index] + ", " +str(lems[index]) + ", " + str(tags[index])+", "+str(ents[index])+"\n"))
 	else:
 		for index in range(len(tokens)):
-			if(tokens[index] == "#"):
+			if(tokens[index] == "\n"):
 				print("\n")
 				linhas = 0
 			else:
 				linhas += 1
 				print(str(linhas) + ", " + str(tokens[index] + ", " +str(lems[index] + ", " + str(tags[index]))))
 
-if __name__ == "__main__":
-	start_time = time.time()
-	load_config()
+def lem_file(out,token,tag):
+	lem = []
+	ent = []
+	lem = lematizador_normal(token,tag)
+	with open(out,"wb") as f:
+		for i in range(len(token)):
+			line = token[i] +"\t" +tag[i] + "\t" + lem[i]  + "\n"
+			f.write((line).encode('utf8'))
+	return lem
+
+def join_data(tokens,tags,lem):
+	data = []
+	for i in range(len(tokens)):
+		dados = []
+		dados.append(tokens[i]) 
+		dados.append(tags[i]) 
+		dados.append(lem[i]) 
+		data.append(dados)
+	return data
+
+def full_pipe(input_file,out_file="Resut.txt"):
 	#############
 	#Tokenize
 	#############
-
-	#tokens = tokenize("TokPyPort/EntradaCadeiaTotal.txt")
+	tokens = tokenize(input_file)
 	
 	#############
 	#Pos
 	#############
-	#tags,result_tags = tag(tokens)
+	tags,result_tags = tag(tokens)
 	
 	#### Pre load a file with tokens and tags
-	tokens,tags = load_manual("TokPyPort/conll_tagged_text_all.txt")
-
+	#tokens,tags = load_manual(input_file)
+	#tokens,tags = load_manual("TokPyPort/conll_tagged_text_all.txt")
 
 	#############
 	#Lemmatizer
 	#############
 	lem = lematizador_normal(tokens,tags)
 	#Re-write the file with the lemas
-	#write_lemmas_only_text(lem,"Results.txt")
-	#Write all in connl format
+	#write_lemmas_only_text(lem,"File.txt")
 
-	write_simple_connl(tokens,tags,lem,"ResultConnl.txt")
-	
-	print("--- %s Seconds ---" % (time.time() - start_time))
+	#############
+	#Entity recognition
+	#############
+	joined_data = join_data(tokens,tags,lem)
+	trained_model = "CRF/trainedModels/harem.pickle"
+	ents = run_crf(joined_data,trained_model)
+	write_simple_connl(tokens,tags,lem,ents,out_file)
 
+
+if __name__ == "__main__":
+	input_file = "SampleInput/Sample.txt"
+	out_file = "SampleOut.txt"
+	#load the pipeline configurations
+	load_config()
+
+	#run the full pipeline
+	full_pipe(input_file,out_file)
