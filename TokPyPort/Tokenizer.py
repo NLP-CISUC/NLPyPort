@@ -93,7 +93,6 @@ def nltk_tokenize(text):
 		for elem in tok:
 			result.append(elem)
 		result.append("\n")
-	print(result)
 	return result
 
 def nlpyport_tokenizer(fileinput,TokPort_config_file):
