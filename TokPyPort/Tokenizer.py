@@ -18,10 +18,10 @@ def load_token_configurations(config_file):
 	return contractions_path,clitics_path
 
 def get_input_from_file(fileinput):
-	text = " "
+	text = []
 	with open(fileinput,'r') as f:
 		for line in f:
-			text += line + " #"
+			text .append(line)
 	return text
 
 def replace_contrations(contractions_path,tokens):
@@ -86,6 +86,16 @@ def replace_clitics(clitics_path,tokens):
 				tokens_after_clitics.append(tokens)
 	return tokens_after_clitics	
 
+def nltk_tokenize(text):
+	result = []
+	for line in text:
+		tok=(nltk.word_tokenize(line))
+		for elem in tok:
+			result.append(elem)
+		result.append("\n")
+	print(result)
+	return result
+
 def nlpyport_tokenizer(fileinput,TokPort_config_file):
 	#define the tagset being used
 	floresta.tagged_words(tagset = "pt-bosque")
@@ -102,10 +112,10 @@ def nlpyport_tokenizer(fileinput,TokPort_config_file):
 	text = get_input_from_file(fileinput)
 
 	#Do thea actual tokenization
-	tokens = nltk.word_tokenize(text)
-	for i in range(len(tokens)):
-		if(tokens[i])=="#":
-			tokens[i] = "\n"
+	tokens = nltk_tokenize(text)
+	#for i in range(len(tokens)):
+	#	if(tokens[i])=="#":
+	#		tokens[i] = "\n"
 	tokens_after_contractions = replace_contrations(contractions_path,tokens)
 
 	#Check if tokens contain clitics
@@ -113,7 +123,7 @@ def nlpyport_tokenizer(fileinput,TokPort_config_file):
 	tokens_after_clitics =replace_clitics(clitics_path,tokens_after_contractions)
 	final_tokens =[]
 	for tok in tokens_after_clitics:
-		final_tokens.append(tok.lower())
+		final_tokens.append(tok)
 	return final_tokens
 
 '''

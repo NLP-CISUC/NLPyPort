@@ -138,16 +138,17 @@ def full_pipe(input_file,out_file=""):
 	#############
 	lemas = lematizador_normal(tokens,tags)
 	#Re-write the file with the lemas
-	#write_lemmas_only_text(lemas,"File.txt")
+	write_lemmas_only_text(lemas,"File.txt")
 
 	#############
 	#Entity recognition
 	#############
-	joined_data = join_data(tokens,tags,lemas)
-	trained_model = "CRF/trainedModels/harem.pickle"
-	entidades = run_crf(joined_data,trained_model)
+	entidades = []
+	#joined_data = join_data(tokens,tags,lemas)
+	#trained_model = "CRF/trainedModels/harem.pickle"
+	#entidades = run_crf(joined_data,trained_model)
 
-	write_simple_connl(tokens,tags,lemas,entidades,out_file)
+	#write_simple_connl(tokens,tags,lemas,entidades,out_file)
 
 	return tokens,tags,lemas,entidades
 
