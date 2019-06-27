@@ -41,3 +41,16 @@ Corpus
 Corpus for PoS tagging training
 	MacMorpho - http://nilc.icmc.usp.br/macmorpho/ 
 	Floresta Sintá(c)tica - https://www.linguateca.pt/Floresta/corpus.html
+#############
+Citations
+#############
+
+To cite and give credits to the pipeline please use the following BibText reference:
+
+@inproceedings{ferreira_etal:slate2019,
+	Author = {João Ferreira and Hugo {Gonçalo~Oliveira} and Ricardo Rodrigues},
+	Booktitle = {Symposium on Languages, Applications and Technologies (SLATE 2019)},
+	Month = {June},
+	Note = {In press},
+	Title = {Improving {NLTK} for Processing {P}ortuguese},
+	Year = {2019}}
