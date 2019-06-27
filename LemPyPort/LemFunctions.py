@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""
+@author: João Ferreira
+"""
 import nltk.data
 import os
 from nltk.corpus import floresta
