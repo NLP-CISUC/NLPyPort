@@ -41,6 +41,8 @@ Corpus
 Corpus for PoS tagging training
 	MacMorpho - http://nilc.icmc.usp.br/macmorpho/ 
 	Floresta Sintá(c)tica - https://www.linguateca.pt/Floresta/corpus.html
+	
+	
 #############
 Citations
 #############
