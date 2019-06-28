@@ -148,9 +148,9 @@ def full_pipe(input_file,out_file=""):
 	#Entity recognition
 	#############
 	entidades = []
-	#joined_data = join_data(tokens,tags,lemas)
-	#trained_model = "CRF/trainedModels/harem.pickle"
-	#entidades = run_crf(joined_data,trained_model)
+	joined_data = join_data(tokens,tags,lemas)
+	trained_model = "CRF/trainedModels/harem.pickle"
+	entidades = run_crf(joined_data,trained_model)
 
 	#write_simple_connl(tokens,tags,lemas,entidades,out_file)
 
