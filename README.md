@@ -1,5 +1,5 @@
 #############
-NLPy_Port
+NLPyPort
 #############
 
 The NLPy_Port is a pipeline assembled from the NLTK pipeline, adding and changing its elements for better processing the portuguese that were previouslly created for the NLPPort pipeline.
