@@ -137,8 +137,8 @@ def full_pipe(input_file,out_file=""):
 	#############
 	#use this method if you want to tokenize from a string or from a list of strings, as shown above
 	#############
-
-	#tokens = tokenize_from_string(inp)
+	#string_input = input_file  # this should be either a list or a string
+	#tokens = tokenize_from_string(string_input)
 
 	
 	#############
