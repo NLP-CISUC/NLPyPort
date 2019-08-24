@@ -99,6 +99,47 @@ def nltk_tokenize(text):
 		result.append("\n")
 	return result
 
+def nlpyport_tokenize_from_string(text,TokPort_config_file):
+	#define the tagset being used
+	floresta.tagged_words(tagset = "pt-bosque")
+	contractions_path = ""
+	clitics_path = ""
+	tokens=[]
+	tokens_after_contractions = []
+	tokens_after_clitics = []
+	#get the directory of the resources
+	contractions_path,clitics_path = load_token_configurations(TokPort_config_file)
+	text_list = []
+	if(isinstance(text, str)):
+		text = [text]
+	else:
+		current_text = ""
+		for elem in text:
+			if elem != '\n':
+				current_text += elem
+			else:
+				text_list.append(current_text)
+				current_text = ""
+		if(current_text!=""):
+			text_list.append(current_text)
+		text = text_list
+	#Do the actual tokenization
+	tokens = nltk_tokenize(text)
+	#for i in range(len(tokens)):
+	#   print(tokens[i])
+	#	if(tokens[i])=="#":
+	#		tokens[i] = "\n"
+	tokens_after_contractions = replace_contrations(contractions_path,tokens)
+
+	#Check if tokens contain clitics
+	#If so, change them to the most extended form
+	tokens_after_clitics =replace_clitics(clitics_path,tokens_after_contractions)
+
+	final_tokens =[]
+	for tok in tokens_after_clitics:
+		final_tokens.append(tok)
+	return final_tokens
+
 def nlpyport_tokenizer(fileinput,TokPort_config_file):
 	#define the tagset being used
 	floresta.tagged_words(tagset = "pt-bosque")

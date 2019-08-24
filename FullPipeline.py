@@ -47,6 +47,9 @@ def load_config(config_file="config/global.properties"):
 def tokenize(fileinput):
 	return nlpyport_tokenizer(fileinput,TokPort_config_file)
 
+def tokenize_from_string(stringinput):
+	return nlpyport_tokenize_from_string(stringinput,TokPort_config_file)
+
 def tag(tokens):
 	return nlpyport_pos(tokens,TagPort_config_file)
 
@@ -126,7 +129,17 @@ def full_pipe(input_file,out_file=""):
 	#############
 	#Tokenize
 	#############
+	
 	tokens = tokenize(input_file)
+
+	#inp = "O João está em viseu."
+	#inp = ["O"," ","João"," ","está"," ","em"," ","viseu"," ","."]
+	#############
+	#use this method if you want to tokenize from a string or from a list of strings, as shown above
+	#############
+
+	#tokens = tokenize_from_string(inp)
+
 	
 	#############
 	#Pos
@@ -142,7 +155,7 @@ def full_pipe(input_file,out_file=""):
 	#############
 	lemas = lematizador_normal(tokens,tags)
 	#Re-write the file with the lemas
-	write_lemmas_only_text(lemas,"File.txt")
+	#write_lemmas_only_text(lemas,"File.txt")
 
 	#############
 	#Entity recognition
@@ -152,7 +165,7 @@ def full_pipe(input_file,out_file=""):
 	trained_model = "CRF/trainedModels/harem.pickle"
 	entidades = run_crf(joined_data,trained_model)
 
-	#write_simple_connl(tokens,tags,lemas,entidades,out_file)
+	write_simple_connl(tokens,tags,lemas,entidades,out_file)
 
 	return tokens,tags,lemas,entidades
 
