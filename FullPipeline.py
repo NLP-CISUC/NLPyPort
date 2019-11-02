@@ -81,7 +81,7 @@ def write_lemmas_only_text(lem,file="testes.txt"):
 			else:
 				f.write(str(elem)+" ")
 
-def write_simple_connl(tokens,tags,lems,ents,file=""):
+def write_simple_connl(tokens,tags,lems,ents,nps,file=""):
 	linhas = 0
 	if(file != ""):
 		for index in range(len(tokens)):
@@ -91,7 +91,7 @@ def write_simple_connl(tokens,tags,lems,ents,file=""):
 					linhas = 0
 				else:
 					linhas += 1
-					f.write(str(linhas) + ", " + str(tokens[index] + ", " +str(lems[index]) + ", " + str(tags[index])+", "+str(ents[index])+"\n"))
+					f.write(str(linhas) + ", " + str(tokens[index] + ", " +str(lems[index]) + ", " + str(tags[index])+", "+str(ents[index]) + ", " + str(nps[index])+"\n"))
 	else:
 		for index in range(len(tokens)):
 			if(tokens[index] == "\n"):
@@ -99,7 +99,7 @@ def write_simple_connl(tokens,tags,lems,ents,file=""):
 				linhas = 0
 			else:
 				linhas += 1
-				print(str(linhas) + ", " + str(tokens[index] + ", " +str(lems[index] + ", " + str(tags[index]))))
+				print(str(linhas) + ", " + str(tokens[index]) + ", " +str(lems[index]) + ", " + str(tags[index]) + ", " + str(nps[index]))
 
 def lem_file(out,token,tag):
 	lem = []
@@ -165,14 +165,21 @@ def full_pipe(input_file,out_file=""):
 	trained_model = "CRF/trainedModels/harem.pickle"
 	entidades = run_crf(joined_data,trained_model)
 
-	write_simple_connl(tokens,tags,lemas,entidades,out_file)
+	np_tags = []
+	joined_data = join_data(tokens,tags,lemas)
+	np_model = "CRF/NP_Final.pickle"
+	#Alternative model macto optimized
+	#np_model = "CRF/NP_Final_Macro.pickle"
+	np_tags = run_crf(joined_data,np_model)
+	
+	write_simple_connl(tokens,tags,lemas,entidades,np_tags,out_file)
 
-	return tokens,tags,lemas,entidades
+	return tokens,tags,lemas,entidades,np_tags
 
 
 if __name__ == "__main__":
 	input_file = "SampleInput/Sample.txt"
-	out_file = "SampleOut.txt"
+	out_file = "SampleOut2.txt"
 
 	#run the full pipeline
-	tokens,tags,lemas,entidades = full_pipe(input_file,out_file)
+	tokens,tags,lemas,entidades,np_tags = full_pipe(input_file,out_file)
