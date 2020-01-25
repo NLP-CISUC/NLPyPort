@@ -40,7 +40,10 @@ def nlpyport_pos(token,config_file):
 	result_toks = [None] * len(token)
 	for tag in tags:
 		for elem in tag:
-			result_tags[i] = elem[1]
+			if(len(elem[1].split(":"))>1):
+				result_tags[i] = elem[1].split(":")[1]
+			else:
+				result_tags[i] = elem[1]
 			i += 1
 	return result_tags, tags
 

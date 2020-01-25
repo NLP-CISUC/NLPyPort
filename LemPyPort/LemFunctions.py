@@ -418,6 +418,21 @@ def tags_classes():
 
 	return adverb_tags,augmentative_tags,diminutive_tags,gender_name_tags,gender_tags,number_tags,superlative_tags,verb_tags
 
+def nlpyport_lematizer_loader(LemPort_config_file):
+	get_paths_lematizador(LemPort_config_file)
+	adverb_norm,number_norm,superlative_norm,augmentative_norm,diminutive_norm,gender_norm,gender_name_norm,verb_norm,ranking,novo_dict  = load_lematizador()
+	return adverb_norm,number_norm,superlative_norm,augmentative_norm,diminutive_norm,gender_norm,gender_name_norm,verb_norm,ranking,novo_dict
+
+
+
+def nlpyport_lematizer_preload(token,tag,LemPort_config_file,adverb_norm,number_norm,superlative_norm,augmentative_norm,diminutive_norm,gender_norm,gender_name_norm,verb_norm,ranking,novo_dict):
+	valor = []
+	for i in range(len(token)):
+		res = all_normalizations(adverb_norm,number_norm,superlative_norm,augmentative_norm,diminutive_norm,gender_norm,gender_name_norm,verb_norm,token[i].lower(),tag[i].lower(),ranking,novo_dict)
+		valor.append(res)
+	return valor
+
+
 def nlpyport_lematizer(token,tag,LemPort_config_file):
 	get_paths_lematizador(LemPort_config_file)
 	adverb_norm,number_norm,superlative_norm,augmentative_norm,diminutive_norm,gender_norm,gender_name_norm,verb_norm,ranking,novo_dict  = load_lematizador()
