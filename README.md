@@ -14,22 +14,22 @@ In order to simplify the usage of the NLPyPort pipeline, some structural changes
 Depending on the planed usage, the pipeline may be called in three different ways:
 
 ### 1  - Default 
-
+```python
 text = new_full_pipe( your_input_file )
-
+```
 
 
 ### 2 - Optional arguments
-
+```python
 text = new_full_pipe( your_input_file , options = options )
-
+```
 
 
 ### 3 - Optional arguments and pre-load pipeline
-
+```python
 config_list = load_congif_to_list() 		# Pre-load the pipeline
 text=new_full_pipe( your_input_file , options = options , config_list = config_list)
-
+```
 
 
 ## Available options
