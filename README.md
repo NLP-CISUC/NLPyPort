@@ -1,31 +1,71 @@
-#############
-NLPyPort
-#############
+#NLPyPort
+
 
 The NLPy_Port is a pipeline assembled from the NLTK pipeline, adding and changing its elements for better processing the portuguese that were previouslly created for the NLPPort pipeline.
 It suports at the moment the taks of Tokenization, PoS Tagging , Lemmatization and Named Entity Recognition
 
-#############
-Usage
-#############
 
-To process text into the Conll format simply call the function full_pipe(<input_file>,<output_file>) for your file.
-This function will write to the file <output_file>. Aditionally it will return the obtain objects - tokens,tags,lemas,entidades.
-If no <output_file> is given, the function will only print and return the results, but will not store them.
+#Usage
 
-#############
-Aditional options
-#############
+In order to simplify the usage of the NLPyPort pipeline, some structural changes were made. The “exemplo.py” file shows exemples os several use cases.
 
-There are some other options available for convenience in the full_pipe function:
-	-The load_manual(<input_file>) loads a file containing the token followed by a space and then its tag, one token per line
-		This allows for loading resources that are already tagged.
-	-The write_lemmas_only(lemas,<output_file>) function takes the lemmas and re-writes the file using these instead of the tokens
+##How to use the pipeline
+
+Depending on the planed usage, the pipeline may be called in three different ways:
+
+###1  - Default 
+
+text = new_full_pipe( your_input_file )
 
 
-#############
-Credits
-#############
+
+###2 - Optional arguments
+
+text = new_full_pipe( your_input_file , options = options )
+
+
+
+###3 - Optional arguments and pre-load pipeline
+
+config_list = load_congif_to_list() 		# Pre-load the pipeline
+text=new_full_pipe( your_input_file , options = options , config_list = config_list)
+
+
+
+##Available options
+
+"tokenizer" : True   -> Perform Tokenization
+
+"pos_tagger" : True -> Perform Pos Tagging
+
+"lemmatizer" : True -> Perform Lemmatization
+
+"entity_recognition" : True -> Perform NER
+
+"np_chunking" : True -> Perform NP Chunking
+
+"pre_load" : False -> Preload the pipeline, needs the additional argument “config_list”
+
+"string_or_array" : True -> Set input as being an array or a string
+
+
+##Returned text
+
+In case of success, the pipeline will return an object of the “Text” class. The properties of this are as follow:
+	text.tokens
+	text.pos_tags
+	text.lemas
+	text.entities
+	text.np_tags
+
+Additionally, there is a method to return the pipeline in the CoNNL Format:
+	text.print_conll()
+
+To separate lines , at the end of each line the additional token EOS is added.
+
+
+#Credits
+
 
 Tokenizer and Lemmatizer resource files - Rodrigues, Ricardo, Hugo Gonçalo Oliveira, and Paulo Gomes. "NLPPort: A Pipeline for Portuguese NLP (Short Paper)." 7th Symposium on Languages, Applications and Technologies (SLATE 2018). Schloss Dagstuhl-Leibniz-Zentrum fuer Informatik, 2018.
 
@@ -43,9 +83,8 @@ Corpus for PoS tagging training
 	Floresta Sintá(c)tica - https://www.linguateca.pt/Floresta/corpus.html
 	
 	
-#############
-Citations
-#############
+
+#Citations
 
 To cite and give credits to the pipeline please use the following BibText reference:
 
