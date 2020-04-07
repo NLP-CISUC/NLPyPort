@@ -1,38 +1,38 @@
-#NLPyPort
+# NLPyPort
 
 
 The NLPy_Port is a pipeline assembled from the NLTK pipeline, adding and changing its elements for better processing the portuguese that were previouslly created for the NLPPort pipeline.
 It suports at the moment the taks of Tokenization, PoS Tagging , Lemmatization and Named Entity Recognition
 
 
-#Usage
+# Usage
 
 In order to simplify the usage of the NLPyPort pipeline, some structural changes were made. The “exemplo.py” file shows exemples os several use cases.
 
-##How to use the pipeline
+## How to use the pipeline
 
 Depending on the planed usage, the pipeline may be called in three different ways:
 
-###1  - Default 
+### 1  - Default 
 
 text = new_full_pipe( your_input_file )
 
 
 
-###2 - Optional arguments
+### 2 - Optional arguments
 
 text = new_full_pipe( your_input_file , options = options )
 
 
 
-###3 - Optional arguments and pre-load pipeline
+### 3 - Optional arguments and pre-load pipeline
 
 config_list = load_congif_to_list() 		# Pre-load the pipeline
 text=new_full_pipe( your_input_file , options = options , config_list = config_list)
 
 
 
-##Available options
+## Available options
 
 "tokenizer" : True   -> Perform Tokenization
 
@@ -49,7 +49,7 @@ text=new_full_pipe( your_input_file , options = options , config_list = config_l
 "string_or_array" : True -> Set input as being an array or a string
 
 
-##Returned text
+## Returned text
 
 In case of success, the pipeline will return an object of the “Text” class. The properties of this are as follow:
 	text.tokens
@@ -64,7 +64,7 @@ Additionally, there is a method to return the pipeline in the CoNNL Format:
 To separate lines , at the end of each line the additional token EOS is added.
 
 
-#Credits
+# Credits
 
 
 Tokenizer and Lemmatizer resource files - Rodrigues, Ricardo, Hugo Gonçalo Oliveira, and Paulo Gomes. "NLPPort: A Pipeline for Portuguese NLP (Short Paper)." 7th Symposium on Languages, Applications and Technologies (SLATE 2018). Schloss Dagstuhl-Leibniz-Zentrum fuer Informatik, 2018.
@@ -84,7 +84,7 @@ Corpus for PoS tagging training
 	
 	
 
-#Citations
+# Citations
 
 To cite and give credits to the pipeline please use the following BibText reference:
 
