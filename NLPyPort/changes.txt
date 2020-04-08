@@ -1,0 +1,49 @@
+options = {
+	tokenizer = true,
+	pos_tagger = true,
+	lemmatizer = true,
+	entity_recognition = true,
+	np_chunking = true,
+	pre_load = false
+	string_or_array = false,
+	out = "OutFile.txt"
+}
+
+config_list = load_congif_to_list(options)
+
+full_pipe(input)
+full_pipe(input,options)
+full_pipe(input,options,config_list)
+
+
+default =  {
+	tokenizer = true,
+	pos_tagger = true,
+	lemmatizer = true,
+	entity_recognition = true,
+	np_chunking = true,
+	pre_load = false
+	string_or_array = false,
+	out = "OutFile.txt"
+}
+
+
+Text {
+	tokens = []
+	pos_tags = []
+	lemmas = []
+	entities = []
+	np_chunks = []
+}
+
+
+class Text:
+	def __init__(self,tokens,pos_tags,lemmas,entities,np_chunks):
+		self.tokens = tokens
+		self.pos_tags = pos_tags
+		self.lemmas = lemmas
+		self.entities = entities
+		self.np_chunks = np_chunks
+
+
+
