@@ -1,4 +1,4 @@
-from FullPipeline import *
+from NLPyPort.FullPipeline import *
 from LemPyPort.LemFunctions import *
 from LemPyPort.dictionary import *
 from TokPyPort.Tokenizer import *
