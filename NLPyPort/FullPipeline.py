@@ -15,6 +15,7 @@ import pickle
 import nltk
 import time
 import xmltodict
+from text import *
 
 
 from pathlib import Path

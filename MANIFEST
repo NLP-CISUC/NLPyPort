@@ -3,4 +3,5 @@ setup.cfg
 setup.py
 NLPyPort/FullPipeline.py
 NLPyPort/FullPipeline_anterior.py
+NLPyPort/__init__.py
 NLPyPort/text.py
