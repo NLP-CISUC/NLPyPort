@@ -15,7 +15,6 @@ import pickle
 import nltk
 import time
 import xmltodict
-from text import *
 from NLPyPort.LemPyPort.LemFunctions import *
 from NLPyPort.LemPyPort.dictionary import *
 from NLPyPort.TokPyPort.Tokenizer import *
