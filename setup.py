@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'NLPyPort',         # How you named your package folder (MyLib)
   packages = ['NLPyPort'],   # Chose the same as "name"
-  version = '2.1.14',      # Start with a small number and increase it with every change you make
+  version = '2.1.15',      # Start with a small number and increase it with every change you make
   license='cc0-1.0',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'Python NLP for Portuguese',   # Give a short description about your library
   author = 'Joao Ferreira',                   # Type in your name
