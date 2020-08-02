@@ -8,7 +8,7 @@ class word_ranking:
         frequency = 0
         word = 0
         lineNumber = 0
-        with open(input_file,"r",encoding = 'utf-8') as f:
+        with open(input_file,"r", encoding = 'utf-8') as f:
             for line in f:
                 line = line.strip()
                 if(len(line)>0 and not (line[0]=="#")):
