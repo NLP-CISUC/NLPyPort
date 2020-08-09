@@ -5,6 +5,16 @@ The NLPy_Port is a pipeline assembled from the NLTK pipeline, adding and changin
 It suports at the moment the taks of Tokenization, PoS Tagging , Lemmatization and Named Entity Recognition
 
 
+# Instalation
+Installing NLPyPort should be as simple as installing the requirments or installing the module via pip (pip install NLPyPort). However, some other configurations may be necessary. 
+
+If you installed NLTK and do not have downloaded the "Floresta" corpus, run the following commands:
+```python
+>>> import nltk
+>>> nltk.download('floresta')
+```
+
+
 # Usage
 
 In order to simplify the usage of the NLPyPort pipeline, some structural changes were made. The “exemplo.py” file shows exemples os several use cases.
