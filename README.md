@@ -8,11 +8,17 @@ It suports at the moment the taks of Tokenization, PoS Tagging , Lemmatization a
 # Instalation
 Installing NLPyPort should be as simple as installing the requirments or installing the module via pip (pip install NLPyPort). However, some other configurations may be necessary. 
 
+If your NLTK version is above 3.4.5, install the version 3.4.5 by running:
+```bash
+>>> pip install nltk==3.4.5
+```
+
 If you installed NLTK and do not have downloaded the "Floresta" corpus, run the following commands:
-```python
+```bash
 >>> import nltk
 >>> nltk.download('floresta')
 ```
+
 
 
 # Usage
