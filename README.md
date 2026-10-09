@@ -5,21 +5,21 @@ The NLPy_Port is a pipeline assembled from the NLTK pipeline, adding and changin
 It suports at the moment the taks of Tokenization, PoS Tagging , Lemmatization and Named Entity Recognition
 
 
-# Instalation
-Installing NLPyPort should be as simple as installing the requirments or installing the module via pip (pip install NLPyPort). However, some other configurations may be necessary. 
+# Installation
+NLPyPort works with current Python (tested on 3.8 to 3.14) and current NLTK (tested on 3.9.1 to 3.10.3); pinning `nltk==3.4.5` is no longer needed.
 
-If your NLTK version is above 3.4.5, install the version 3.4.5 by running:
 ```bash
->>> pip install nltk==3.4.5
+pip install .            # from a clone of this repository
+python -m nltk.downloader floresta punkt_tab
 ```
 
-If you installed NLTK and do not have downloaded the "Floresta" corpus, run the following commands:
+The bundled resources and models are located relative to the installed package, so the pipeline can be used from any working directory.
+
+To run the regression tests:
 ```bash
->>> import nltk
->>> nltk.download('floresta')
+pip install pytest
+python -m pytest tests/
 ```
-
-
 
 # Usage
 

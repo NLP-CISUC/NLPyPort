@@ -29,6 +29,7 @@ from NLPyPort.LemPyPort.dictionary.dictionary_entry import *
 from NLPyPort.LemPyPort.dictionary.dictionary import *
 from NLPyPort.LemPyPort.rank.word_ranking import *
 from pathlib import Path
+from NLPyPort._paths import resource
 
 
 adverb_path = ""
@@ -252,45 +253,45 @@ def get_paths_lematizador(config_file ):
 	global dictionary_main_path 
 	global custom_dictionary_path 
 
-	with open( config_file ,'r') as f:
+	with open(config_file,'r', encoding='utf-8') as f:
 		for line in f:
 			if(line[0] != "#"):
 				divided_line = line.split("=")
 				if(divided_line[0]=="adverb_path"):
-					adverb_path=Path("NLPyPort/"+divided_line[1].strip('\n'))
+					adverb_path=resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="number_path"):
-					number_path=Path("NLPyPort/"+divided_line[1].strip('\n'))
+					number_path=resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="superlative_path"):
-					superlative_path=Path("NLPyPort/"+divided_line[1].strip('\n'))
+					superlative_path=resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="augmentative_path"):
-					augmentative_path=Path("NLPyPort/"+divided_line[1].strip('\n'))
+					augmentative_path=resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="diminutive_path"):
-					diminutive_path=Path("NLPyPort/"+divided_line[1].strip('\n'))
+					diminutive_path=resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="gender_path"):
-					gender_path=Path("NLPyPort/"+divided_line[1].strip('\n'))
+					gender_path=resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="gender_name_path"):
-					gender_name_path=Path("NLPyPort/"+divided_line[1].strip('\n'))
+					gender_name_path=resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="irregular_verb_path"):
-					irregular_verb_path=Path("NLPyPort/"+divided_line[1].strip('\n'))
+					irregular_verb_path=resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="lexeme_verb_path"):
-					lexeme_verb_path=Path("NLPyPort/"+divided_line[1].strip('\n'))
+					lexeme_verb_path=resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="regular_verb_path"):
-					regular_verb_path=Path("NLPyPort/"+divided_line[1].strip('\n'))
+					regular_verb_path=resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="ranking_path"):
-					ranking_path=Path("NLPyPort/"+divided_line[1].strip('\n'))
+					ranking_path=resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="dict_path"):
-					dict_path=Path("NLPyPort/"+divided_line[1].strip('\n'))
+					dict_path=resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="lexical_conversions"):
 					lexical_conversions=divided_line[1].strip('\n')
@@ -308,10 +309,10 @@ def get_paths_lematizador(config_file ):
 					break_on_underscore=divided_line[1].strip('\n')
 
 				elif(divided_line[0]=="dictionary_main_path"):
-					dictionary_main_path = Path("NLPyPort/"+divided_line[1].strip('\n'))
+					dictionary_main_path = resource(divided_line[1].strip('\n'))
 
 				elif(divided_line[0]=="custom_dictionary_path"):
-					custom_dictionary_path = Path("NLPyPort/"+divided_line[1].strip('\n'))
+					custom_dictionary_path = resource(divided_line[1].strip('\n'))
 
 def load_lematizador():
 

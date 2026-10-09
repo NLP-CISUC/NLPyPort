@@ -72,7 +72,7 @@ class verb_normalizer:
 		#-----------------
 		#Load regular declensions
 		#-----------------
-		with open(file_name_conjugation) as file:
+		with open(file_name_conjugation, encoding='utf-8') as file:
 			doc = xmltodict.parse( file.read())
 			result = (doc["irregularverbconjugations"]["replacement"])
 			
@@ -111,7 +111,7 @@ class verb_normalizer:
 		#-----------------
 		#Load lexeme declensions
 		#-----------------
-		with open(file_name_lexemes) as file:
+		with open(file_name_lexemes, encoding='utf-8') as file:
 			doc = xmltodict.parse( file.read())
 			result = (doc["regularverblexemes"]["replacement"])
 			'''
@@ -148,7 +148,7 @@ class verb_normalizer:
 		#-----------------
 		#Load conjugation declensions
 		#-----------------
-		with open(file_name_declensions) as file:
+		with open(file_name_declensions, encoding='utf-8') as file:
 			doc = xmltodict.parse( file.read())
 			result = (doc["regularverbdeclensions"]["replacement"])
 			'''

@@ -19,7 +19,7 @@ class number_normalizer:
 
 
 	def number_normalizer_load(self,file_name):
-		with open(file_name) as file:
+		with open(file_name, encoding='utf-8') as file:
 			doc = xmltodict.parse( file.read())
 			result = (doc["numberdeclensions"]["replacement"])
 			'''

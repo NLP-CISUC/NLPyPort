@@ -9,7 +9,7 @@ class dictionary:
         part_of_speech = ""
         subcategory = ""
         morph_attributes = ""
-        with open(input_file,'r') as f:
+        with open(input_file,'r', encoding='utf-8') as f:
             for line in f:
                 if(len(line)>0 and not (line[0]=="#")):
                     if(("." in line and "," in line) \

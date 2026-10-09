@@ -8,22 +8,23 @@ from nltk.corpus import floresta
 import nltk
 import xmltodict
 from pathlib import Path
+from NLPyPort._paths import resource
 
 def load_token_configurations(config_file):
 	contractions_path = ""
 	clitics_path = ""
-	with open(config_file) as g:
+	with open(config_file, encoding='utf-8') as g:
 		for line in g:
 			if(line[0]!="#"):
 				if(line.split("=")[0]=="contractions"):
-					contractions_path = Path("NLPyPort/"+line.split("=")[1].strip('\n'))
+					contractions_path = resource(line.split("=")[1].strip('\n'))
 				elif(line.split("=")[0]=="clitics"):
-					clitics_path = Path("NLPyPort/"+line.split("=")[1].strip('\n'))
+					clitics_path = resource(line.split("=")[1].strip('\n'))
 	return contractions_path,clitics_path
 
 def get_input_from_file(fileinput):
 	text = []
-	with open(fileinput,'r') as f:
+	with open(fileinput,'r', encoding='utf-8') as f:
 		for line in f:
 			text .append(line)
 	return text
@@ -34,7 +35,7 @@ def replace_contrations(contractions_path,tokens):
 
 	#Check if tokens contain contractions
 	#If so, change them to the most extended form
-	with open(contractions_path) as fd:
+	with open(contractions_path, encoding='utf-8') as fd:
 		doc = xmltodict.parse(fd.read())
 		result = (doc["contractions"]["replacement"])
 		for tok in tokens:
@@ -53,7 +54,7 @@ def replace_contrations(contractions_path,tokens):
 
 def replace_clitics(clitics_path,tokens):
 	tokens_after_clitics =[]
-	with open(clitics_path) as fd:
+	with open(clitics_path, encoding='utf-8') as fd:
 		doc2 = xmltodict.parse(fd.read())
 		result2 = (doc2["clitics"]["replacement"])
 		for tok2 in tokens:

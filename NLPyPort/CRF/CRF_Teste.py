@@ -8,23 +8,14 @@ import warnings
 warnings.filterwarnings("ignore")
 from collections import Counter
 from itertools import chain
-from sklearn.model_selection import *
-from sklearn.metrics import *
-from sklearn.preprocessing import LabelBinarizer,LabelEncoder
-from sklearn.decomposition import PCA
-from sklearn.metrics.pairwise import cosine_similarity
-from scipy import spatial
 import re
+import pandas
 import pandas as pd
-from pandas import *
-import numpy as np
 import os
 import itertools
 import pickle
 #import matplotlib.pyplot as plt
 from sklearn_crfsuite import CRF
-from sklearn_crfsuite import metrics
-from sklearn_crfsuite import scorers
 
 def print_transitions(trans_features):
     string = ""

@@ -17,9 +17,15 @@ import time
 import xmltodict
 
 from pathlib import Path
+from NLPyPort._paths import resource
+from NLPyPort.TokPyPort.Tokenizer import *
+from NLPyPort.TagPyPort.Tagger import *
+from NLPyPort.LemPyPort.LemFunctions import *
+from NLPyPort.CRF.CRF_Teste import *
+from NLPyPort.text import *
 
 
-global_porperties_file = Path("NLPyPort/config/global.properties")
+global_porperties_file = resource("config/global.properties")
 
 lexical_conversions="PRP:PREP;PRON:PRO;IN:INTERJ;ART:DET;"
 floresta.tagged_words(tagset = "pt-bosque")
@@ -63,7 +69,7 @@ def unload_config_from_list(config_list):
 
 
 
-def load_config(config_file=Path("NLPyPort/config/global.properties")):
+def load_config(config_file=resource("config/global.properties")):
 	global TokPort_config_file
 	global TagPort_config_file
 	global LemPort_config_file
@@ -71,22 +77,22 @@ def load_config(config_file=Path("NLPyPort/config/global.properties")):
 		for line in f:
 			if(line[0]!="#"):
 				if(line.split("=")[0]=="TokPort_config_file"):
-					TokPort_config_file = Path("NLPyPort/"+line.split("=")[1].strip("\n"))
+					TokPort_config_file = resource(line.split("=")[1].strip("\n"))
 				elif(line.split("=")[0]=="TagPort_config_file"):
-					TagPort_config_file = Path("NLPyPort/"+line.split("=")[1].strip("\n"))
+					TagPort_config_file = resource(line.split("=")[1].strip("\n"))
 				elif(line.split("=")[0]=="LemPort_config_file"):
-					LemPort_config_file = Path("NLPyPort/"+line.split("=")[1].strip("\n"))
+					LemPort_config_file = resource(line.split("=")[1].strip("\n"))
 
-def load_and_return_config(config_file=Path("NLPyPort/config/global.properties")):
+def load_and_return_config(config_file=resource("config/global.properties")):
 	with open (config_file,'r') as f:
 		for line in f:
 			if(line[0]!="#"):
 				if(line.split("=")[0]=="TokPort_config_file"):
-					TokPort_config_file = Path("NLPyPort/"+line.split("=")[1].strip("\n"))
+					TokPort_config_file = resource(line.split("=")[1].strip("\n"))
 				elif(line.split("=")[0]=="TagPort_config_file"):
-					TagPort_config_file = Path("NLPyPort/"+line.split("=")[1].strip("\n"))
+					TagPort_config_file = resource(line.split("=")[1].strip("\n"))
 				elif(line.split("=")[0]=="LemPort_config_file"):
-					LemPort_config_file = Path("NLPyPort/"+line.split("=")[1].strip("\n"))
+					LemPort_config_file = resource(line.split("=")[1].strip("\n"))
 	return TokPort_config_file,TagPort_config_file,LemPort_config_file
 
 
@@ -130,7 +136,7 @@ def lematizador_normal(tokens,tags):
 def load_manual(file):
 	tokens = []
 	tags = []
-	f =  open(file,'r')
+	f =  open(file,'r', encoding='utf-8')
 	alteradas = 0
 	mesmas = 0
 	for line in f:
@@ -142,7 +148,7 @@ def load_manual(file):
 
 def write_lemmas_only_text(lem,file="testes.txt"):
 	for elem in lem:
-		with open(file,'a') as f:
+		with open(file,'a', encoding='utf-8') as f:
 			if(elem == '\n'):
 				f.write('\n')
 			else:
@@ -152,7 +158,7 @@ def write_simple_connl(tokens,tags,lems,ents,nps,file=""):
 	linhas = 0
 	if(file != ""):
 		for index in range(len(tokens)):
-			with open(file,'a') as f:
+			with open(file,'a', encoding='utf-8') as f:
 				if(tokens[index] == "\n"):
 					f.write("\n")
 					linhas = 0
@@ -230,7 +236,7 @@ def full_pipe(input_file,out_file=""):
 
 	entidades = []
 	joined_data = join_data(tokens,tags,lemas)
-	trained_model = "CRF/trainedModels/harem.pickle"
+	trained_model = str(resource("CRF/trainedModels/harem.pickle"))
 	entidades = run_crf(joined_data,trained_model)
 
 
@@ -240,9 +246,9 @@ def full_pipe(input_file,out_file=""):
 
 	np_tags = []
 	joined_data = join_data(tokens,tags,lemas)
-	np_model = "CRF/NP_Final.pickle"
+	np_model = str(resource("CRF/NP_Final.pickle"))
 	#Alternative model macro optimized
-	#np_model = "CRF/NP_Final_Macro.pickle"
+	#np_model = str(resource("CRF/NP_Final_Macro.pickle"))
 
 	np_tags = run_crf(joined_data,np_model)
 	
@@ -484,7 +490,7 @@ def new_full_pipe(input_file,options=[],config_list=[]):
 		if(options["entity_recognition"] == True):
 				debug_print("Entity_recognition is True")
 				joined_data = join_data(text.tokens,text.pos_tags,text.lemas)
-				trained_model = "NLPyPort/CRF/trainedModels/harem.pickle"
+				trained_model = str(resource("CRF/trainedModels/harem.pickle"))
 				entidades = run_crf(joined_data,trained_model)
 				text.set_entities(entidades)
 				debug_print("Entities gotten")
@@ -494,7 +500,7 @@ def new_full_pipe(input_file,options=[],config_list=[]):
 				debug_print("Np_chunking is True")
 				np_tags = []
 				joined_data = join_data(tokens,tags,lemas)
-				np_model = "NLPyPort/CRF/NP_Final.pickle"
+				np_model = str(resource("CRF/NP_Final.pickle"))
 				np_tags = run_crf(joined_data,np_model)
 				text.set_np_tags(np_tags)
 				debug_print("NP-Chunks gotten")
@@ -539,14 +545,14 @@ def full_pipe_preload(input_file,config_list,out_file=""):
 	###################
 	entidades = []
 	joined_data = join_data(tokens,tags,lemas)
-	trained_model = "NLPyPort/CRF/trainedModels/trainedModels/harem.pickle"
+	trained_model = str(resource("CRF/trainedModels/harem.pickle"))
 	entidades = run_crf(joined_data,trained_model)
 
 	np_tags = []
 	joined_data = join_data(tokens,tags,lemas)
-	np_model = "NLPyPort/CRF/trainedModels/NP_Final.pickle"
+	np_model = str(resource("CRF/NP_Final.pickle"))
 	#Alternative model macro optimized
-	#np_model = "CRF/NP_Final_Macro.pickle"
+	#np_model = str(resource("CRF/NP_Final_Macro.pickle"))
 	np_tags = run_crf(joined_data,np_model)
 	
 

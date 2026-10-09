@@ -1,0 +1,9 @@
+include README.md LICENCE.txt
+recursive-include NLPyPort/config *.properties
+recursive-include NLPyPort/TokPyPort/resources *
+recursive-include NLPyPort/TagPyPort/resources *
+recursive-include NLPyPort/LemPyPort/resources *
+include NLPyPort/CRF/*.pickle
+include NLPyPort/CRF/trainedModels/*.pickle
+global-exclude *.pyc .DS_Store
+prune NLPyPort/**/__pycache__
