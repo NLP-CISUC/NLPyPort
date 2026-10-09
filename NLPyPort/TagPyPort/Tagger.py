@@ -16,19 +16,52 @@ import nltk
 import time
 import xmltodict
 from pathlib import Path
+from NLPyPort._paths import resource
 
 def load_tag_configurations(config_file):
 	model_path = ""
-	with open(config_file) as g:
+	with open(config_file, encoding='utf-8') as g:
 		for line in g:
 			if(line[0]!="#"):
 				if(line.split("=")[0]=="model"):
-					model_path = Path("NLPyPort/"+line.split("=")[1].strip('\n'))
+					model_path = resource(line.split("=")[1].strip('\n'))
 	return model_path
 
+def _upgrade_legacy_regexp_tagger(tagger):
+	"""Make RegexpTaggers pickled with NLTK <= 3.4 usable on newer NLTK.
+
+	NLTK 3.4 stored the patterns in ``_regexs``; NLTK >= 3.4.5 reads
+	``_regexps`` instead, which caused "'RegexpTagger' object has no
+	attribute '_regexps'" (issue #7). Rebuild the attribute from the old one
+	using the installed NLTK's own constructor so its current pattern type
+	is used.
+	"""
+	from nltk.tag.sequential import RegexpTagger
+	if isinstance(tagger, RegexpTagger) and not hasattr(tagger, "_regexps") and hasattr(tagger, "_regexs"):
+		patterns = [(getattr(regexp, "pattern", regexp), tag) for regexp, tag in tagger._regexs]
+		tagger._regexps = RegexpTagger(patterns)._regexps
+
+
+def _walk_taggers(tagger, seen=None):
+	"""Yield every tagger reachable through Brill initial taggers and backoff chains."""
+	if seen is None:
+		seen = set()
+	if tagger is None or id(tagger) in seen:
+		return
+	seen.add(id(tagger))
+	yield tagger
+	yield from _walk_taggers(getattr(tagger, "_initial_tagger", None), seen)
+	for sub in getattr(tagger, "_taggers", [])[1:]:
+		yield from _walk_taggers(sub, seen)
+
+
 def load_tagger(model_path):
-	f = open(model_path, 'rb')
-	return (pickle.load(f))
+	# NOTE: the bundled models are pickles shipped with this package; only load trusted files.
+	with open(model_path, 'rb') as f:
+		tagger = pickle.load(f)
+	for sub in _walk_taggers(tagger):
+		_upgrade_legacy_regexp_tagger(sub)
+	return tagger
 
 
 def nlpyport_pos(token,config_file):

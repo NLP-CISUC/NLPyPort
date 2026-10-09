@@ -19,7 +19,7 @@ class augmentative_normalizer:
 		self.declesion_re=lista
 
 	def augmentative_normalizer_load(self,file_name):
-		with open(file_name) as file:
+		with open(file_name, encoding='utf-8') as file:
 			doc = xmltodict.parse( file.read())
 			result = (doc["augmentativedeclensions"]["replacement"])
 

@@ -22,7 +22,7 @@ class superlative_normalizer:
 	def superlative_normalizer_load(self,file_name):
 		#self.declesion_replacement = declesions
 		#self.declesion_replacement.sort
-		with open(file_name) as file:
+		with open(file_name, encoding='utf-8') as file:
 			doc = xmltodict.parse( file.read())
 			result = (doc["superlativedeclensions"]["replacement"])
 			'''
